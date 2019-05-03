@@ -1,18 +1,23 @@
+
+// REQUIRE LIBRARIES
 var express     = require('express')
-    app         = express()
-    bodyParser  = require('body-parser')
-    mongoose    = require('mongoose')
+var bodyParser  = require('body-parser')
+var mongoose    = require('mongoose')
 
 var Campground  = require('./models/campground')
-    Comment     = require('./models/comment')
-    SeedDB      = require('./seeds')
+var Comment     = require('./models/comment')
+var SeedDB      = require('./seeds')
 
-SeedDB()
-
-mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true})
-
+// APP CONFIG
+var app = express()
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
+
+// DATABASE
+mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true})
+SeedDB()
+
+// ROUTES
 
   app.get('/', function  (req, res) {
     res.render('landing')
