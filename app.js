@@ -1,13 +1,16 @@
 
 // REQUIRE LIBRARIES
-var express     = require('express')
-var bodyParser  = require('body-parser')
-var mongoose    = require('mongoose')
+var express       = require('express')
+var bodyParser    = require('body-parser')
+var mongoose      = require('mongoose')
+var passport      = require('passport')
+var localStrategy = require('passport-local')
 
 // REQUIRE MODELS
 var Campground  = require('./models/campground')
 var Comment     = require('./models/comment')
 var SeedDB      = require('./seeds')
+var User        = require('./models/user')
 
 // APP CONFIG
 var app = express()
@@ -19,6 +22,19 @@ app.use(express.static(__dirname + '/public'))
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true})
 SeedDB()
 
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+  secret: "lk21389ajspd390dsfjn23908001ndweqko",
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new localStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+  
 // ROUTES
 
   app.get('/', function  (req, res) {
@@ -114,6 +130,20 @@ app.post('/campgrounds/:id/comments', function (req, res) {
       })
     }
   })
+})
+
+// =========================================================
+// AUTH ROUTES
+// =========================================================
+
+// show register form
+app.get('/register', function (req, res) {
+  res.render('register')
+})
+
+// handle sign up logic
+app.post('/register', function (req, res) {
+  res.send('signing you up')
 })
 
 // RUN SERVER --------------------------------------
