@@ -34,7 +34,16 @@ passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-  
+// set middleware that will run for every route
+app.use(function (req, res, next) {
+
+  // everything inside res.local
+  // will be available insede the template
+  // req.user is set by passport
+  res.locals.currentUser = req.user
+  next()
+})
+
 // ROUTES
 
   app.get('/', function  (req, res) {
@@ -45,9 +54,9 @@ passport.deserializeUser(User.deserializeUser())
 // CAMPGROUNDS ROUTES
 // =========================================================
 
-
 // INDEX - show all campgrounds
   app.get('/campgrounds', function (req, res) {
+    
     // Get all campgrounds from DB
     Campground.find({}, function (err, allCampgrounds) {
       if (err) {
@@ -174,7 +183,7 @@ app.get('/logout', function (req, res) {
   res.redirect('/campgrounds')
 })
 
-// MIDDLEWARES -----------------------------------
+// MIDDLEWARES FUNCTIONS ---------------------------
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) {
