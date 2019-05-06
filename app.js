@@ -25,7 +25,9 @@ app.use(express.static(__dirname + '/public'))
 
 // DATABASE CONFIG 
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {useNewUrlParser: true})
-SeedDB()
+
+// seed the database
+// SeedDB()
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
