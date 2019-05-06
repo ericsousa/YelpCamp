@@ -198,27 +198,3 @@ function isLoggedIn (req, res, next) {
 app.listen('3000', function () {
   console.log('YelpCamp server running')
 })
-
-
-
-/*
-  NOTES 
-
-  RESTful Routes:       
-  
-    (representetional state transfer)
-    (a mapping between HTTP routes and CRUD)
-
-    index     /dogs             GET      list all dogs
-    new       /dogs/new         GET      show add form
-    create    /dogs             POST     save new dog
-    show      /dogs/:id         GET      show details
-    edit      /dogs/:id/edit    GET      show edit form 
-    update    /dogs/:id         PUT      update dog
-    destroy   /dogs/:id         DELETE   delete dog
-
-  -----------------------------
-
-  db.nameOfCollection.drop()   >>    delete everything into the collection
-
-*/
