@@ -58,11 +58,11 @@ router.get('/:id',  function (req, res) {
 
 // EDIT 
 router.get("/:id/edit", checkCampgroundOwnership, function (req, res) {
-  Campground.findById(req.params.id, function (err, campground) {
+  Campground.findById(req.params.id, function (err, foundCampground) {
     if (err) {
       console.log(err)
     } else {
-      res.render('campgrounds/edit', {campground: campground})
+      res.render('campgrounds/edit', {campground: foundCampground})
     }
   })
 })
